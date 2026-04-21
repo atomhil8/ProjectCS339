@@ -1,1 +1,5 @@
-# ProjectCS339
+Stores the machine’s current state:
+
+registers
+memory
+program counter
