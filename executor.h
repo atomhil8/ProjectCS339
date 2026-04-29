@@ -16,11 +16,21 @@
 std::string clean(std::string s);
 
 // Breaks down entire program into computer-friendly vector, also documents labels
-std::vector<std::string> parse(const std::string& fileName, ::MachineState& state);
+std::vector<std::string> parse(const std::string& fileName, MachineState& state);
 
-void IFStage(const std::vector<std::string> program, ::MachineState& state);
+// Fetch stage of pipeline
+void IFStage(const std::vector<std::string>& program, MachineState& state);
 
-// Executes one instruction line
-void execute(const std::string& instruction, ::MachineState& state, const bool& debug);
+// Decode stage of pipeline
+void IDStage(MachineState& state);
+
+// Execute stage of pipeline
+void EXStage(MachineState& state);
+
+// Memory read/write stage of pipeline
+void MEMStage(MachineState& state);
+
+// Register write back stage of pipeline
+void WBStage(MachineState& state);
 
 #endif
