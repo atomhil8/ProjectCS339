@@ -29,34 +29,17 @@ int op_sll(int value, int shamt) {
 }
 
 int op_srl(int value, int shamt) {
-    return static_cast<unsigned int>(value) >> shamt;
+    return value >> shamt;
 }
 
-int op_lw(MachineState& state, int base, int offset) {
-    int address = base + offset;
-
-    return state.MEM[address];
+int op_lw(int base, int offset) {
+    return base + offset;
 }
 
-void op_sw(MachineState& state, int base, int offset, int value) {
-    int address = base + offset;
-    state.MEM[address] = value;
+int op_sw(int base, int offset) {
+    return base + offset;
 }
 
-/*
 bool op_beq(int a, int b) {
     return a == b;
 }
-
-int op_j(const std::unordered_map<std::string, int>& label_table,
-        const std::string& label) {
-    std::unordered_map<std::string, int>::const_iterator it =
-        label_table.find(label);
-
-    if (it == label_table.end()) {
-        throw std::runtime_error("Jump label not found: " + label);
-    }
-
-    return it->second;
-}
-*/
