@@ -7,7 +7,7 @@
 #define NUM_REGS 32
 #define MEM_SIZE 1024
 
-typedef struct MachineState {
+struct MachineState {
     int REG[NUM_REGS];
     int MEM[MEM_SIZE];
     int PC; // Tracks which instruction we're on
@@ -20,30 +20,35 @@ typedef struct MachineState {
 
     // State Registers
     struct IF_ID {
-        int instruction;
-        int pc_plus_4;
+        std::string instruction;
+        int newPC;
     };
 
     struct ID_EX {
-        int rs_val, rt_val;
-        int immediate;
+        int rsVal, rtVal;
+        int imm;
         int rs, rt, rd;
         // Control signals
-        bool RegWrite, MemRead, MemWrite, MemtoReg, ALUSrc;
+        bool RegDst, RegWrite, ALUSrc, MemWrite, MemRead, MemtoReg, PCSrc;
+        std::string ALUOp;
     };
 
     struct EX_MEM {
-        int alu_result;
-        int write_data;
-        int write_reg;
-        bool RegWrite, MemRead, MemWrite, MemtoReg;
+        int ALUResult;
+        int writeData;
+        int writeReg;
+        // Control signals
+        bool RegDst, RegWrite, ALUSrc, MemWrite, MemRead, MemtoReg, PCSrc;
+        std::string ALUOp;
     };
 
     struct MEM_WB {
-        int mem_data;
-        int alu_result;
-        int write_reg;
-        bool RegWrite, MemtoReg;
+        int memData;
+        int ALUResult;
+        int writeReg;
+        // Control signals
+        bool RegDst, RegWrite, ALUSrc, MemWrite, MemRead, MemtoReg, PCSrc;
+        std::string ALUOp;
     };
 
     IF_ID if_id, next_if_id;
