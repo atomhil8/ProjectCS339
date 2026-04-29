@@ -4,11 +4,6 @@
 // Parses input and executes instructions
 
 #include "executor.h"
-#include <iostream>
-#include <iomanip>
-#include <fstream>
-#include <sstream>
-#include <unordered_map>
 
 std::string clean(std::string s) {
     if (!s.empty() && s.back() == ',') s.pop_back();
@@ -53,6 +48,10 @@ std::vector<std::string> parse(const std::string& fileName, MachineState& state)
     file.close();
 
     return program;
+}
+
+void IFStage(const std::vector<std::string> program, MachineState& state) {
+
 }
 
 void execute(const std::string& instruction, MachineState& state, const bool& debug) {
