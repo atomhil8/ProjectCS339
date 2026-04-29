@@ -1,0 +1,40 @@
+addi $t0, $zero, 10
+addi $t1, $zero, 5
+addi $t2, $zero, 3
+nop
+nop
+add $t3, $t0, $t1
+sub $t4, $t0, $t1
+mul $t5, $t0, $t2
+nop
+nop
+addi $t6, $t3, 2
+nop
+nop
+and $s0, $t0, $t1
+or  $s1, $t0, $t1
+nop
+nop
+sll $s2, $t1, 2
+srl $s3, $t0, 1
+nop
+nop
+sw $t3, 0($zero)
+sw $t5, 4($zero)
+lw $s4, 0($zero)
+lw $s5, 4($zero)
+
+nop
+
+beq $t1, $s3, finish
+
+addi $s6, $zero, 99
+addi $s7, $zero, 99
+
+finish:
+j end
+
+addi $t8, $zero, 99
+
+end:
+nop
