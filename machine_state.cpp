@@ -23,6 +23,14 @@ MachineState::MachineState() {
         {"$k0", 26},{"$k1", 27},
         {"$gp", 28},{"$sp", 29},{"$fp", 30},{"$ra", 31}
     };
+
+    next_if_id = {"NOP", 0};
+    next_id_ex = {0, 0, 0, -1, -1, -1,
+        false, false, false, false, false, false, false, "NOP"};
+    next_ex_mem = {0, 0, 0, 
+        false, false, false, false, false, false, false, "NOP"};
+    next_mem_wb = {0, 0, 0, 
+        false, false, false, false, false, false, false, "NOP"};
 }
 
 // Stores value into the register array at index
