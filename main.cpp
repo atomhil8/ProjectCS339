@@ -29,8 +29,9 @@ int main(int argc, char* argv[]) {
         std::cout << program[i] << std::endl;
     }
     */
-    
-    while(state.PC < program.size()) {
+    int drainCycles = 0;
+
+    while (state.PC < program.size() || drainCycles < 4) {
         //std::cout << state.PC << std::endl;
         
         IFStage(program, state);
@@ -122,7 +123,12 @@ int main(int argc, char* argv[]) {
             std::cout << "PCSrc: " << state.id_ex.PCSrc << std::endl;
         }
 
-        state.PC++;
+        if (state.PC < program.size()) {
+            state.PC++;
+        }   
+        else {
+            drainCycles++;
+        }
     }
 
     std::cout << std::endl;
