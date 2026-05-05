@@ -1,5 +1,5 @@
 // Luke Werner A05265888 onn16
-// 4/30/2026
+// 5/4/2026
 // executor.cpp
 // Parses input and executes instructions
 
@@ -31,11 +31,6 @@ std::vector<std::string> parse(const std::string& fileName, MachineState& state)
                 std::string label = line.substr(0, line.find(':'));
 
                 state.labelMap.insert(std::make_pair(label, IC + 1));
-
-                // [WIP] Attempts to extract instruction following label
-                // Since this doesn't work, program assumes labels are on separate lines for now
-
-                // line = line.substr(line.find(':') + 1, line.size() - line.find(':'));
             }
             // Otherwise it's an instruction
             else {
@@ -367,14 +362,10 @@ void EXStage(MachineState& state) {
         // Do nothing
     }
 
-    state.next_ex_mem.RegDst = state.id_ex.RegDst;
     state.next_ex_mem.RegWrite = state.id_ex.RegWrite;
-    state.next_ex_mem.ALUSrc = state.id_ex.ALUSrc;
     state.next_ex_mem.MemWrite = state.id_ex.MemWrite;
     state.next_ex_mem.MemRead = state.id_ex.MemRead;
     state.next_ex_mem.MemtoReg = state.id_ex.MemtoReg;
-    state.next_ex_mem.PCSrc = state.id_ex.PCSrc;
-    state.next_ex_mem.ALUOp = state.id_ex.ALUOp;
 }
 
 void MEMStage(MachineState& state) {
