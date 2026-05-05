@@ -28,9 +28,9 @@ MachineState::MachineState() {
     next_id_ex = {0, 0, 0, -1, -1, -1,
         false, false, false, false, false, false, false, "NOP"};
     next_ex_mem = {0, 0, 0, 
-        false, false, false, false, false, false, false, "NOP"};
+        false, false, false, false};
     next_mem_wb = {0, 0, 0, 
-        false, false, false, false, false, false, false, "NOP"};
+        false, false, false, false};
 }
 
 // Stores value into the register array at index
