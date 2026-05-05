@@ -23,30 +23,26 @@ int main(int argc, char* argv[]) {
     MachineState state;
 
     std::vector<std::string> program = parse(fileName, state);
-
-    /*
-    for(int i = 0; i < program.size(); i++) {
-        std::cout << program[i] << std::endl;
-    }
-    */
-    int drainCycles = 0;
-
-    while (state.PC < program.size() || drainCycles < 4) {
-        //std::cout << state.PC << std::endl;
+    
+    while(state.PC < program.size() + 4) {
         
-        IFStage(program, state);
-        //std::cout << "ran if" << std::endl;
-        IDStage(state);
-        //std::cout << "ran id" << std::endl;
-        EXStage(state);
-        //std::cout << "ran ex" << std::endl;
-        MEMStage(state);
-        //std::cout << "ran mem" << std::endl;
+        if(state.PC < program.size()) {
+            IFStage(program, state);
+        }
+        if(state.PC < program.size() + 1) {
+            IDStage(state);
+        }
+        if(state.PC < program.size() + 2) {
+            EXStage(state);
+        }
+        if(state.PC < program.size() + 3) {
+            MEMStage(state);
+        }
         WBStage(state);
-        //std::cout << "ran wb" << std::endl;
 
         if(debug) {
             std::cout << std::endl;
+            std::cout << "[CYCLE " << state.PC << "]" << std::endl;
             std::cout << "Registers:" << std::endl;
 
             // Counter makes new line every four registers to make it look pretty
@@ -63,10 +59,10 @@ int main(int argc, char* argv[]) {
                     }
                 }
 
-                std::cout << std::setw(5) << "[" << reg << "]: " << state.REG[i];
+                std::cout << std::setw(5) << "[" << reg << "]: " << std::setw(3) << state.REG[i];
 
                 if(counter % 4 == 0) {
-                    std::cout << std::endl;
+                    std::cout << std::endl << "  ";
                 }
 
                 counter++;
@@ -78,30 +74,20 @@ int main(int argc, char* argv[]) {
             std::string MEMinst = "empty";
             std::string WBinst = "empty";
 
-            if(state.PC > 3) {
+            if(state.PC < program.size()) {
                 IFinst = program[state.PC];
+            }
+            if(state.PC < program.size() + 1 && state.PC > 0) {
                 IDinst = program[state.PC - 1];
+            }
+            if(state.PC < program.size() + 2 && state.PC > 1) {
                 EXinst = program[state.PC - 2];
+            }
+            if(state.PC < program.size() + 3 && state.PC > 2) {
                 MEMinst = program[state.PC - 3];
+            }
+            if(state.PC < program.size() + 4 && state.PC > 3) {
                 WBinst = program[state.PC - 4];
-            }
-            else if(state.PC > 2) {
-                IFinst = program[state.PC];
-                IDinst = program[state.PC - 1];
-                EXinst = program[state.PC - 2];
-                MEMinst = program[state.PC - 3];
-            }
-            else if(state.PC > 1) {
-                IFinst = program[state.PC];
-                IDinst = program[state.PC - 1];
-                EXinst = program[state.PC - 2];
-            }
-            else if(state.PC > 0) {
-                IFinst = program[state.PC];
-                IDinst = program[state.PC - 1];
-            }
-            else if(state.PC == 0) {
-                IFinst = program[state.PC];
             }
 
             std::cout << std::endl;
@@ -113,7 +99,7 @@ int main(int argc, char* argv[]) {
             std::cout << "[WB]: " << WBinst << std::endl;
 
             std::cout << std::endl;
-            std::cout << "Control Signals:" << std::endl;
+            std::cout << "Control Signals (Passed into EX stage):" << std::endl;
             std::cout << "RegDst: " << state.id_ex.RegDst << std::endl;
             std::cout << "RegWrite: " << state.id_ex.RegWrite << std::endl;
             std::cout << "ALUSrc: " << state.id_ex.ALUSrc << std::endl;
@@ -121,14 +107,10 @@ int main(int argc, char* argv[]) {
             std::cout << "MemRead: " << state.id_ex.MemRead << std::endl;
             std::cout << "MemtoReg: " << state.id_ex.MemtoReg << std::endl;
             std::cout << "PCSrc: " << state.id_ex.PCSrc << std::endl;
+            std::cout << "___________________________________________________________" << std::endl;
         }
 
-        if (state.PC < program.size()) {
-            state.PC++;
-        }   
-        else {
-            drainCycles++;
-        }
+        state.PC++;
     }
 
     std::cout << std::endl;
@@ -148,10 +130,10 @@ int main(int argc, char* argv[]) {
             }
         }
 
-        std::cout << std::setw(5) << "[" << reg << "]: " << state.REG[i];
+        std::cout << std::setw(5) << "[" << reg << "]: " << std::setw(3) << state.REG[i];
 
         if(counter % 4 == 0) {
-            std::cout << std::endl;
+            std::cout << std::endl << "  ";
         }
 
         counter++;
