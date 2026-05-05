@@ -38,8 +38,7 @@ struct MachineState {
         int writeData;
         int writeReg;
         // Control signals
-        bool RegDst, RegWrite, ALUSrc, MemWrite, MemRead, MemtoReg, PCSrc;
-        std::string ALUOp;
+        bool RegWrite, MemWrite, MemRead, MemtoReg;
     };
 
     struct MEM_WB {
@@ -47,8 +46,7 @@ struct MachineState {
         int ALUResult;
         int writeReg;
         // Control signals
-        bool RegDst, RegWrite, ALUSrc, MemWrite, MemRead, MemtoReg, PCSrc;
-        std::string ALUOp;
+        bool RegWrite, MemWrite, MemRead, MemtoReg;
     };
 
     IF_ID if_id, next_if_id;
